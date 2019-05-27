@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lc.sharding.mybatismapper.TOrderMapper" >
-  <resultMap id="BaseResultMap" type="com.lc.sharding.pojo.TOrder" >
+<mapper namespace="com.cldt.sharding.mybatismapper.TOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.cldt.sharding.pojo.TOrder" >
     <result column="id" property="id" jdbcType="BIGINT" />
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List" >
     id, order_id, user_id, business_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lc.sharding.pojo.TOrderExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cldt.sharding.pojo.TOrderExample" >
     select
     <if test="distinct" >
       distinct
@@ -82,19 +82,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.lc.sharding.pojo.TOrderExample" >
+  <delete id="deleteByExample" parameterType="com.cldt.sharding.pojo.TOrderExample" >
     delete from t_order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.lc.sharding.pojo.TOrder" >
+  <insert id="insert" parameterType="com.cldt.sharding.pojo.TOrder" >
     insert into t_order (id, order_id, user_id,
       business_id)
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
       #{businessId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.lc.sharding.pojo.TOrder" >
+  <insert id="insertSelective" parameterType="com.cldt.sharding.pojo.TOrder" >
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -125,7 +125,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.lc.sharding.pojo.TOrderExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.cldt.sharding.pojo.TOrderExample" resultType="java.lang.Integer" >
     select count(*) from t_order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

@@ -70,7 +70,7 @@
     </bean>
     <!-- 注解Mapper scanner -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.lc.sharding.mybatismapper"/>
+        <property name="basePackage" value="com.cldt.sharding.mybatismapper"/>
         <property name="sqlSessionTemplateBeanName" value="sqlSession"/>
     </bean>
 
@@ -91,7 +91,7 @@
                   algorithm-expression="rbb_${business_id.longValue()}"/>
     <!--分表策略-->
     <rdb:strategy id="tableShardingStrategy" sharding-columns="user_id,order_id"
-                  algorithm-class="com.lc.sharding.algorithm.MultipleKeysTableShardingAlgorithmImpl"/>
+                  algorithm-class="com.cldt.sharding.algorithm.MultipleKeysTableShardingAlgorithmImpl"/>
 
     <rdb:data-source id="shardingDataSource">
         <rdb:sharding-rule data-sources="rbb_112,rbb_103">
