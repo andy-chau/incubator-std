@@ -1,0 +1,15 @@
+{
+ "name": "example", 
+ "version": "1.0.0",
+ "description": "这是一个简单的apidoc的example",
+ "title": "apidoc-demo",
+ "url": "https：//api.github.com/v1",
+ "header":{
+    "title": "Overview",
+    "filename": "header.md"
+  },
+  "footer":{
+    "title": "Copyright",
+    "filename": "footer.md"
+  }
+}

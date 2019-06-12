@@ -1,0 +1,1 @@
+#### Copyright © 2005 - 2017 Lakala Payment Co., Ltd. All Rights Reserved.

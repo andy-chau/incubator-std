@@ -1,0 +1,2 @@
+#生成doc
+apidoc -i ./ -o terget/ -t template/
