@@ -4,12 +4,41 @@
 	
 </body>
 <script>
+var b64map="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",b64pad="=";
+function hex2b64(a){var b,c,d="";for(b=0;b+3<=a.length;b+=3)c=parseInt(a.substring(b,b+3),16),d+=b64map.charAt(c>>6)+b64map.charAt(63&c);for(b+1==a.length?(c=parseInt(a.substring(b,b+1),16),d+=b64map.charAt(c<<2)):b+2==a.length&&(c=parseInt(a.substring(b,b+2),16),d+=b64map.charAt(c>>2)+b64map.charAt((3&c)<<4));(3&d.length)>0;)d+=b64pad;return d}
+//·Ö¶Î¼ÓÃÜ
+JSEncrypt.prototype.encryptLong=function (d){
+  var k = this.key;
+  var maxLength = (((k.n.bitLength() + 7) >> 3) - 11);
+  
+  try {
+    var lt = "";
+    var ct = "";
+
+    if (d.length > maxLength) {
+      lt = d.match(/.{1,117}/g);
+      lt.forEach(function (entry) {
+        var t1 = k.encrypt(entry);
+        ct += t1;
+      });
+      return hex2b64(ct);
+    }
+    var t = k.encrypt(d);
+    var y = hex2b64(t);
+    return y;
+  } catch (ex) {
+	console.log(ex);
+    return false;
+  }
+};
 (function encryptStr(str){
-	var lklpub = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoRxD+HfPesHbmx8/pvE46BMYKzWDJSrFvO/rzGd7Js8IiKhqCBuREEoWasnbIAdiTl5/vbOY1RzxCcR3mtjW59PFT/AQIeB2+KulabCgl5H3bLYLEvPkYfpyc6U8RJVvqLFATgPuYuDe4vrrfzV4LMZgsapSa62CCSNuCxb0B0JAIqNKgY6eCvaLZuhABedBGRrXgVE1pmWv1bkMVG3Iseez2AAGRkBxnRLsccjbi/6qIHzRbfa36QoDEeMXUWb6w8EcAF+hFVqG/0P4g/hq1OHnx7+rQVkoehLL/Cbf2Z2C930keD+fpuylLsvYCvl+XOb2RHcuLTR92Ota0d1byQIDAQAB";
+	var pubkey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoRxD+HfPesHbmx8/pvE46BMYKzWDJSrFvO/rzGd7Js8IiKhqCBuREEoWasnbIAdiTl5/vbOY1RzxCcR3mtjW59PFT/AQIeB2+KulabCgl5H3bLYLEvPkYfpyc6U8RJVvqLFATgPuYuDe4vrrfzV4LMZgsapSa62CCSNuCxb0B0JAIqNKgY6eCvaLZuhABedBGRrXgVE1pmWv1bkMVG3Iseez2AAGRkBxnRLsccjbi/6qIHzRbfa36QoDEeMXUWb6w8EcAF+hFVqG/0P4g/hq1OHnx7+rQVkoehLL/Cbf2Z2C930keD+fpuylLsvYCvl+XOb2RHcuLTR92Ota0d1byQIDAQAB";
+	var prikey = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQChHEP4d896wdubHz+m8TjoExgrNYMlKsW87+vMZ3smzwiIqGoIG5EQShZqydsgB2JOXn+9s5jVHPEJxHea2Nbn08VP8BAh4Hb4q6VpsKCXkfdstgsS8+Rh+nJzpTxElW+osUBOA+5i4N7i+ut/NXgsxmCxqlJrrYIJI24LFvQHQkAio0qBjp4K9otm6EAF50EZGteBUTWmZa/VuQxUbcix57PYAAZGQHGdEuxxyNuL/qogfNFt9rfpCgMR4xdRZvrDwRwAX6EVWob/Q/iD+GrU4efHv6tBWSh6Esv8Jt/ZnYL3fSR4P5+m7KUuy9gK+X5c5vZEdy4tNH3Y61rR3VvJAgMBAAECggEAfa8FP3KIA2X0IcFw8JVCJZmvwxWN55LEi65HL0CTDCV6rNFlVknbEvAZKNmr/gKEqEqEMMNIuQhI6avA+qWqkVPdm4zVqPfpF/kfo6HMxjFy6fXiEbj+M4kjfCAtMfu6DcmpNrNOZwiyGDRTPvvBcnyXtkH+5k2HIgXntPMFEBtWPdh3poQwJsHnqWpUifCFiQnR5LvBJQZH4ceAwsvGeWIUSCoWhppkh4NRvAaUDon/k4t0aEy1CPzSpS/uQN4Y/N27m8v2/jk8Z0u8Joe+Q03hpEMr7dfSs3bqkIgQX9ZP4d8AEMtzze8Z423PF1yRW9OlUNOX5CF+BT5TP4h6AQKBgQD1mvsJH/J9hIkTjdXYeRq9trsP4RPS/G/wYtBbektUAxk2K9wPm0byU2HQuqEib8VU4VFdkUuiw0+emQ+2BBNunMy1/+d5cn1huKyiR3kH0uaRzVBL1p3qHG+sqZKWE6e/EhoE9WvqQc3Ry9At9pNCzdD2jQwHUtGbzdMMoS/gaQKBgQCn7dJExXHppqyG9pMXOPjwp4b95tBEr8qPluJPFEvE5ypQt1rW43OeORk+FqGwXz2UHCJKIgXgjYnxvHDHxrM02eZTYyTj+jqeGQO8fics38/JxmAwmBu1144pczF4iAbuclYlB7EBY02iX4eS8L1Qng1zaU0VsIyDLCvH94Q0YQKBgQC0Trf3RfXvAgrkSR9yUc448tq32KSGI39GejS+w7Rjk/bBV0eySWu3YVGRPEIplubG3reuOonNjxd3tqTbGnjtnr2G670S4uN7h2ltpY0MGl/dMF6/nmrGQWQW3VLZTMq8slxZwZcdHnwshjVqWPhZdeHv7zKiecGaYWuMfRU56QKBgQCZEzTE86au8fv62vGiDZD+7fcjoy7eLdBbq5KHu1yGFKKCCWGI2LUf2bSk4ERrXaXoSO0I3pK06tB/xuKXeQ0KdEZ8ZLfQCN0+GFdLj0NuqGXk7Cvqn/1CeUdhiVvjHzwSR682+hfjx/2QsbwHueMYhbqFJcvapaCwQad3FK0ygQKBgQC2gK2KQ2GNzkpOSzQh82d1ofyLwNrFl+fFxYycsHWvxpP2yWj/NDqlzRVBzEQv18DKNvtF6PmtV065b0KOpvcpy6kcKjX1ct9HaxL/LcEMo4dUPD7+PGJcZjeisFw2Fn7fh6g3r3qsS0aFGvgdTirjH6IuuGXOPMBw8at6286xjw==";
 	var encrypt = new JSEncrypt();
-	encrypt.setPublicKey(lklpub);
-	console.log(encrypt.encrypt('hello'))
-	// return encrypt.encrypt('hello');
+	encrypt.setPublicKey(pubkey);
+	console.log(encrypt.encrypt('hello'));
+	var encStr = encrypt.encryptLong('{"userId":"4400889930","mobile":"13581113366","userId":"4400889930","mobile":"13581113366","userId":"4400889930","mobile":"13581113366","userId":"4400889930","mobile":"13581113366","userId":"4400889930","mobile":"13581113366","userId":"4400889930","mobile":"13581113366","userId":"4400889930","mobile":"13581113366","userId":"4400889930","mobile":"13581113366"}');
+	console.log(encStr);
 })()
 </script>
 </html>
