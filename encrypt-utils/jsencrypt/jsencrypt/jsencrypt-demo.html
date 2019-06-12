@@ -1,0 +1,15 @@
+<html>
+<script src="./jsencrypt.min.js"></script>
+<body>
+	
+</body>
+<script>
+(function encryptStr(str){
+	var lklpub = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoRxD+HfPesHbmx8/pvE46BMYKzWDJSrFvO/rzGd7Js8IiKhqCBuREEoWasnbIAdiTl5/vbOY1RzxCcR3mtjW59PFT/AQIeB2+KulabCgl5H3bLYLEvPkYfpyc6U8RJVvqLFATgPuYuDe4vrrfzV4LMZgsapSa62CCSNuCxb0B0JAIqNKgY6eCvaLZuhABedBGRrXgVE1pmWv1bkMVG3Iseez2AAGRkBxnRLsccjbi/6qIHzRbfa36QoDEeMXUWb6w8EcAF+hFVqG/0P4g/hq1OHnx7+rQVkoehLL/Cbf2Z2C930keD+fpuylLsvYCvl+XOb2RHcuLTR92Ota0d1byQIDAQAB";
+	var encrypt = new JSEncrypt();
+	encrypt.setPublicKey(lklpub);
+	console.log(encrypt.encrypt('hello'))
+	// return encrypt.encrypt('hello');
+})()
+</script>
+</html>

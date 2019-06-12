@@ -1,0 +1,46 @@
+<html>
+<script src="./jsrsasign-all-min.js"></script>
+<body>
+	
+</body>
+<script>
+(function encryptStr(str){
+	var lklprv = 'MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQChHEP4d896wdubHz+m8TjoExgrNYMlKsW87+vMZ3smzwiIqGoIG5EQShZqydsgB2JOXn+9s5jVHPEJxHea2Nbn08VP8BAh4Hb4q6VpsKCXkfdstgsS8+Rh+nJzpTxElW+osUBOA+5i4N7i+ut/NXgsxmCxqlJrrYIJI24LFvQHQkAio0qBjp4K9otm6EAF50EZGteBUTWmZa/VuQxUbcix57PYAAZGQHGdEuxxyNuL/qogfNFt9rfpCgMR4xdRZvrDwRwAX6EVWob/Q/iD+GrU4efHv6tBWSh6Esv8Jt/ZnYL3fSR4P5+m7KUuy9gK+X5c5vZEdy4tNH3Y61rR3VvJAgMBAAECggEAfa8FP3KIA2X0IcFw8JVCJZmvwxWN55LEi65HL0CTDCV6rNFlVknbEvAZKNmr/gKEqEqEMMNIuQhI6avA+qWqkVPdm4zVqPfpF/kfo6HMxjFy6fXiEbj+M4kjfCAtMfu6DcmpNrNOZwiyGDRTPvvBcnyXtkH+5k2HIgXntPMFEBtWPdh3poQwJsHnqWpUifCFiQnR5LvBJQZH4ceAwsvGeWIUSCoWhppkh4NRvAaUDon/k4t0aEy1CPzSpS/uQN4Y/N27m8v2/jk8Z0u8Joe+Q03hpEMr7dfSs3bqkIgQX9ZP4d8AEMtzze8Z423PF1yRW9OlUNOX5CF+BT5TP4h6AQKBgQD1mvsJH/J9hIkTjdXYeRq9trsP4RPS/G/wYtBbektUAxk2K9wPm0byU2HQuqEib8VU4VFdkUuiw0+emQ+2BBNunMy1/+d5cn1huKyiR3kH0uaRzVBL1p3qHG+sqZKWE6e/EhoE9WvqQc3Ry9At9pNCzdD2jQwHUtGbzdMMoS/gaQKBgQCn7dJExXHppqyG9pMXOPjwp4b95tBEr8qPluJPFEvE5ypQt1rW43OeORk+FqGwXz2UHCJKIgXgjYnxvHDHxrM02eZTYyTj+jqeGQO8fics38/JxmAwmBu1144pczF4iAbuclYlB7EBY02iX4eS8L1Qng1zaU0VsIyDLCvH94Q0YQKBgQC0Trf3RfXvAgrkSR9yUc448tq32KSGI39GejS+w7Rjk/bBV0eySWu3YVGRPEIplubG3reuOonNjxd3tqTbGnjtnr2G670S4uN7h2ltpY0MGl/dMF6/nmrGQWQW3VLZTMq8slxZwZcdHnwshjVqWPhZdeHv7zKiecGaYWuMfRU56QKBgQCZEzTE86au8fv62vGiDZD+7fcjoy7eLdBbq5KHu1yGFKKCCWGI2LUf2bSk4ERrXaXoSO0I3pK06tB/xuKXeQ0KdEZ8ZLfQCN0+GFdLj0NuqGXk7Cvqn/1CeUdhiVvjHzwSR682+hfjx/2QsbwHueMYhbqFJcvapaCwQad3FK0ygQKBgQC2gK2KQ2GNzkpOSzQh82d1ofyLwNrFl+fFxYycsHWvxpP2yWj/NDqlzRVBzEQv18DKNvtF6PmtV065b0KOpvcpy6kcKjX1ct9HaxL/LcEMo4dUPD7+PGJcZjeisFw2Fn7fh6g3r3qsS0aFGvgdTirjH6IuuGXOPMBw8at6286xjw==';
+   
+   var lklpub = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoRxD+HfPesHbmx8/pvE46BMYKzWDJSrFvO/rzGd7Js8IiKhqCBuREEoWasnbIAdiTl5/vbOY1RzxCcR3mtjW59PFT/AQIeB2+KulabCgl5H3bLYLEvPkYfpyc6U8RJVvqLFATgPuYuDe4vrrfzV4LMZgsapSa62CCSNuCxb0B0JAIqNKgY6eCvaLZuhABedBGRrXgVE1pmWv1bkMVG3Iseez2AAGRkBxnRLsccjbi/6qIHzRbfa36QoDEeMXUWb6w8EcAF+hFVqG/0P4g/hq1OHnx7+rQVkoehLL/Cbf2Z2C930keD+fpuylLsvYCvl+XOb2RHcuLTR92Ota0d1byQIDAQAB";
+    var prikey = KEYUTIL.getKey(b64nltohex(lklprv), null, "pkcs8prv");
+	var pubkey = KEYUTIL.getKey(b64nltohex(lklpub), null, "pkcs8pub");
+    
+	//公钥加密
+	var enc = KJUR.crypto.Cipher.encrypt("123123123",pubkey);
+	enc = hextob64(enc);
+	console.log(enc);
+	
+	//私钥解密
+    var dec = KJUR.crypto.Cipher.decrypt(b64tohex(enc), prikey);
+    console.log("jsrsasign decrypt: " + dec);
+	
+	//私钥签名
+    // 创建 Signature 对象
+    let signature=new KJUR.crypto.Signature({alg:"SHA1withRSA"});
+    // 传入key实例, 初始化signature实例
+    signature.init(prikey);
+    // 传入待签明文
+    signature.updateString(enc);
+    // 签名, 得到16进制字符结果
+    let a = signature.sign();
+    let sign = hextob64(a);
+
+    console.log(sign);
+	
+	//公钥验证
+    // !要重新new 一个Signature, 否则, 取摘要和签名时取得摘要不一样, 导致验签误报失败(原因不明)!
+    let signatureVf = new KJUR.crypto.Signature({alg:"SHA1withRSA"});
+	signatureVf.init(pubkey);
+    signatureVf.updateString(enc);
+    // !接受的参数是16进制字符串!
+    let b = signatureVf.verify(b64tohex(sign));
+    console.log("jsrsasign verify: "+b);
+})()
+</script>
+</html>
